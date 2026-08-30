@@ -1,0 +1,8 @@
+title: "Rondinelio Correa Advocacia e Consultoria Jurídica"
+url: "https://www.rondineliocorrea.com.br"
+baseurl: ""
+timezone: "America/Campo_Grande"
+lang: "pt-BR"
+
+exclude:
+  - index_aprovado_atual.html
