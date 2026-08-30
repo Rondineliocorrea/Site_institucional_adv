@@ -1,69 +1,120 @@
 ---
 layout: null
 ---
-{% include_relative index_aprovado_atual.html %}
+{% capture home %}{% include_relative index_aprovado_atual.html %}{% endcapture %}
 
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2144170376171137');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2144170376171137&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+{% capture seo_head %}
+  <link rel="canonical" href="https://www.rondineliocorrea.com.br/">
+  <meta name="author" content="Rondinelio Correa">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Rondinelio Correa Advocacia e Consultoria Jurídica">
+  <meta property="og:title" content="Rondinelio Correa | Advocacia e Consultoria Jurídica">
+  <meta property="og:description" content="Atuação em Direito do Consumidor, Trabalhista e Previdenciário, com análise individual de cada caso e atendimento em todo o Brasil.">
+  <meta property="og:url" content="https://www.rondineliocorrea.com.br/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "@id":"https://www.rondineliocorrea.com.br/#website",
+        "url":"https://www.rondineliocorrea.com.br/",
+        "name":"Rondinelio Correa Advocacia e Consultoria Jurídica",
+        "inLanguage":"pt-BR"
+      },
+      {
+        "@type":"LegalService",
+        "@id":"https://www.rondineliocorrea.com.br/#legalservice",
+        "name":"Rondinelio Correa Advocacia e Consultoria Jurídica",
+        "url":"https://www.rondineliocorrea.com.br/",
+        "telephone":"+55 67 99611-9098",
+        "email":"rondineliojunior.adv@gmail.com",
+        "areaServed":{"@type":"Country","name":"Brasil"},
+        "serviceType":["Direito do Consumidor","Direito Trabalhista","Direito Previdenciário"],
+        "sameAs":["https://instagram.com/rondinelioadv"],
+        "founder":{
+          "@type":"Person",
+          "name":"Rondinelio Correa",
+          "jobTitle":"Advogado",
+          "identifier":"OAB/MS 26.153"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+{% endcapture %}
+{% assign home = home | replace_first: '</head>', seo_head %}
+{% assign home = home | replace: 'href="conteudos/compra-nao-reconhecida-cartao/"', 'href="/conteudos/compra-nao-reconhecida-cartao/"' %}
+{% assign home = home | replace: 'href="conteudos/vinculo-de-emprego-sem-registro/"', 'href="/conteudos/trabalhei-sem-registro-vinculo-emprego/"' %}
+{% assign home = home | replace: 'href="conteudos/beneficio-por-incapacidade-documentos/"', 'href="/conteudos/beneficio-incapacidade-documentos/"' %}
+{% assign home = home | replace: 'href="conteudos/"', 'href="/conteudos/"' %}
 
-<script>
-  // Integração de captura de leads — Google Sheets.
-  (() => {
-    const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbw9DBXpE3hJXm-cyCFufhniPgHE0AWUx00L1e6p44od9kCVXf6yd6q3jHb9gOHD4TA/exec";
-    const form = document.getElementById("atendimentoForm");
-    if (!form) return;
+{% capture body_scripts %}
+  <script src="/assets/js/privacy-tracking.js"></script>
+  <script>
+    (() => {
+      const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbw9DBXpE3hJXm-cyCFufhniPgHE0AWUx00L1e6p44od9kCVXf6yd6q3jHb9gOHD4TA/exec";
+      const form = document.getElementById("atendimentoForm");
 
-    form.addEventListener("submit", () => {
-      const nome = document.getElementById("nome").value.trim();
-      const telefone = document.getElementById("telefone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const resumo = document.getElementById("resumo").value.trim();
-      const area = document.getElementById("areaSelecionada").value;
-      const consentimento = document.getElementById("consentimento").checked;
-
-      if (!nome || !telefone || !area || !consentimento) return;
-
-      // Meta Pixel: registra conversão quando o atendimento é efetivamente iniciado.
-      if (typeof fbq === "function") {
-        fbq('track', 'Lead');
+      // Mantém a política acessível dentro do popup e no rodapé.
+      document.querySelectorAll('.privacy a').forEach(link => {
+        link.href = '/politica-de-privacidade/';
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.onclick = null;
+      });
+      const footerNav = document.querySelector('.site-footer .footer-column .footer-links');
+      if (footerNav && !footerNav.querySelector('a[href="/politica-de-privacidade/"]')) {
+        const privacy = document.createElement('a');
+        privacy.href = '/politica-de-privacidade/';
+        privacy.textContent = 'Privacidade e Cookies';
+        footerNav.appendChild(privacy);
+        const prefs = document.createElement('a');
+        prefs.href = '#';
+        prefs.textContent = 'Preferências de cookies';
+        prefs.addEventListener('click', event => {
+          event.preventDefault();
+          if (typeof window.rcOpenCookiePreferences === 'function') window.rcOpenCookiePreferences();
+        });
+        footerNav.appendChild(prefs);
       }
 
-      const params = new URLSearchParams(window.location.search);
-      const dados = new URLSearchParams({
-        nome,
-        telefone,
-        email,
-        area,
-        resumo,
-        consentimento: "Sim",
-        origem: "Site",
-        pagina: window.location.href,
-        utm_source: params.get("utm_source") || "",
-        utm_medium: params.get("utm_medium") || "",
-        utm_campaign: params.get("utm_campaign") || ""
-      });
+      if (!form) return;
+      form.addEventListener("submit", () => {
+        const nome = document.getElementById("nome").value.trim();
+        const telefone = document.getElementById("telefone").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const resumo = document.getElementById("resumo").value.trim();
+        const area = document.getElementById("areaSelecionada").value;
+        const consentimento = document.getElementById("consentimento").checked;
+        if (!nome || !telefone || !area || !consentimento) return;
 
-      fetch(LEADS_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        body: dados,
-        keepalive: true
-      }).catch(() => {});
-    }, true);
-  })();
-</script>
+        if (typeof window.rcTrackLead === 'function') window.rcTrackLead();
+
+        const params = new URLSearchParams(window.location.search);
+        const dados = new URLSearchParams({
+          nome, telefone, email, area, resumo,
+          consentimento: "Sim",
+          origem: "Site",
+          pagina: window.location.href,
+          utm_source: params.get("utm_source") || "",
+          utm_medium: params.get("utm_medium") || "",
+          utm_campaign: params.get("utm_campaign") || ""
+        });
+
+        fetch(LEADS_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          body: dados,
+          keepalive: true
+        }).catch(() => {});
+      }, true);
+    })();
+  </script>
+</body>
+{% endcapture %}
+{% assign home = home | replace_first: '</body>', body_scripts %}
+{{ home }}
