@@ -1,6 +1,7 @@
 ---
 layout: article
 title: "Compra não reconhecida no cartão: o que fazer?"
+seo_title: "Compra não reconhecida no cartão: o que fazer"
 description: "Identificou uma compra que não realizou? Veja quais providências práticas podem ajudar a contestar a transação, preservar provas e avaliar os próximos passos."
 category: "Direito do Consumidor"
 area: "Direito do Consumidor"
