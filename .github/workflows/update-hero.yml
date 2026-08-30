@@ -1,0 +1,41 @@
+name: Atualizar foto da primeira dobra
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-hero.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Substituir somente a imagem da primeira dobra
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          pattern = r'(<div class="hero-photo">\s*<img src=")[^"]+(" alt="Rondinelio Correa, advogado OAB/MS 26\.153">)'
+          updated, count = re.subn(pattern, r'\1assets/hero-home.svg\2', html, count=1)
+          if count != 1:
+              raise SystemExit('Imagem da primeira dobra não localizada; nenhuma alteração realizada.')
+          path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Commit da alteração
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Atualiza foto da primeira dobra" || exit 0
+          git push
