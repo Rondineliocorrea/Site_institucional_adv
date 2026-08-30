@@ -1,3 +1,7 @@
+{% assign pillar_url = '/conteudos/' %}
+{% if page.category == 'Direito do Consumidor' %}{% assign pillar_url = '/conteudos/direito-do-consumidor/' %}{% endif %}
+{% if page.category == 'Direito Trabalhista' %}{% assign pillar_url = '/conteudos/direito-trabalhista/' %}{% endif %}
+{% if page.category == 'Direito Previdenciário' %}{% assign pillar_url = '/conteudos/direito-previdenciario/' %}{% endif %}
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -38,7 +42,7 @@
         "author":{"@type":"Person","name":"Rondinelio Correa","jobTitle":"Advogado","identifier":"OAB/MS 26.153","url":"https://www.rondineliocorrea.com.br/#advogado"},
         "publisher":{"@type":"Organization","name":"Rondinelio Correa Advocacia e Consultoria Jurídica","url":"https://www.rondineliocorrea.com.br/"},
         "articleSection":{{ page.category | jsonify }},
-        "isPartOf":{"@type":"WebSite","name":"Rondinelio Correa Advocacia e Consultoria Jurídica","url":"https://www.rondineliocorrea.com.br/"},
+        "isPartOf":{"@type":"CollectionPage","name":{{ page.category | jsonify }},"url":"{{ pillar_url | absolute_url }}"},
         "inLanguage":"pt-BR"
       },
       {
@@ -46,7 +50,8 @@
         "itemListElement":[
           {"@type":"ListItem","position":1,"name":"Início","item":"https://www.rondineliocorrea.com.br/"},
           {"@type":"ListItem","position":2,"name":"Conteúdos","item":"https://www.rondineliocorrea.com.br/conteudos/"},
-          {"@type":"ListItem","position":3,"name":{{ page.title | jsonify }},"item":"{{ page.url | absolute_url }}"}
+          {"@type":"ListItem","position":3,"name":{{ page.category | jsonify }},"item":"{{ pillar_url | absolute_url }}"},
+          {"@type":"ListItem","position":4,"name":{{ page.title | jsonify }},"item":"{{ page.url | absolute_url }}"}
         ]
       }
     ]
@@ -72,7 +77,7 @@
     <section class="article-hero">
       <div class="container article-hero-inner">
         <nav class="article-breadcrumb" aria-label="Breadcrumb">
-          <a href="/">Início</a><span>›</span><a href="/conteudos/">Conteúdos</a><span>›</span><span>{{ page.category }}</span>
+          <a href="/">Início</a><span>›</span><a href="/conteudos/">Conteúdos</a><span>›</span><a href="{{ pillar_url }}">{{ page.category }}</a><span>›</span><span>Artigo</span>
         </nav>
         <div class="kicker">{{ page.category }}</div>
         <h1>{{ page.title }}</h1>
@@ -92,21 +97,27 @@
         {{ content }}
         <p class="disclaimer"><strong>Conteúdo informativo.</strong> Este artigo apresenta informações gerais e não substitui a análise individual de documentos e circunstâncias concretas. A publicação não constitui promessa de resultado nem cria, por si só, relação advogado-cliente.</p>
 
+        <section class="pillar-return" aria-label="Guia da área">
+          <span class="article-category">Guia da área</span>
+          <h2>Explore o guia de {{ page.category }}</h2>
+          <p>Veja os demais conteúdos desta área reunidos em uma página central, organizada por temas relacionados.</p>
+          <a href="{{ pillar_url }}">Ver guia completo →</a>
+        </section>
+
         <section class="related-content" aria-labelledby="related-title">
           <div class="kicker">Leia também</div>
-          <h2 id="related-title">Outros conteúdos jurídicos</h2>
+          <h2 id="related-title">Outros conteúdos de {{ page.category }}</h2>
           <div class="related-grid">
+            {% assign related_posts = site.posts | where: "category", page.category %}
             {% assign related_count = 0 %}
-            {% for post in site.posts %}
-              {% if post.url != page.url %}
-                {% if related_count < 2 %}
-                  <a class="related-card" href="{{ post.url }}">
-                    <span class="article-category">{{ post.category }}</span>
-                    <strong>{{ post.title }}</strong>
-                    <span>Ler conteúdo →</span>
-                  </a>
-                  {% assign related_count = related_count | plus: 1 %}
-                {% endif %}
+            {% for post in related_posts %}
+              {% if post.url != page.url and related_count < 3 %}
+                <a class="related-card" href="{{ post.url }}">
+                  <span class="article-category">{{ post.category }}</span>
+                  <strong>{{ post.title }}</strong>
+                  <span>Ler conteúdo →</span>
+                </a>
+                {% assign related_count = related_count | plus: 1 %}
               {% endif %}
             {% endfor %}
           </div>
