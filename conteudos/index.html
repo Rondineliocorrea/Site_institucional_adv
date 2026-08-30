@@ -45,6 +45,15 @@ layout: null
       },
       {
         "@type":"ItemList",
+        "name":"Guias por área jurídica",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"url":"https://www.rondineliocorrea.com.br/conteudos/direito-do-consumidor/","name":"Direito do Consumidor"},
+          {"@type":"ListItem","position":2,"url":"https://www.rondineliocorrea.com.br/conteudos/direito-trabalhista/","name":"Direito Trabalhista"},
+          {"@type":"ListItem","position":3,"url":"https://www.rondineliocorrea.com.br/conteudos/direito-previdenciario/","name":"Direito Previdenciário"}
+        ]
+      },
+      {
+        "@type":"ItemList",
         "name":"Artigos jurídicos",
         "itemListElement":[
           {% for post in site.posts %}
@@ -82,6 +91,31 @@ layout: null
 
     <section class="contents-main">
       <div class="container">
+        <section class="pillar-directory" aria-labelledby="pillar-directory-title">
+          <div class="pillar-directory-head">
+            <div class="kicker">Guias por área</div>
+            <h2 id="pillar-directory-title">Comece pelo tema principal.</h2>
+            <p>As páginas-pilar reúnem os artigos relacionados de cada área e ajudam a navegar entre assuntos próximos.</p>
+          </div>
+          <div class="pillar-directory-grid">
+            <a class="pillar-directory-card" href="/conteudos/direito-do-consumidor/">
+              <span class="article-category">Direito do Consumidor</span>
+              <strong>Fraudes, cobranças, voos e relações de consumo</strong>
+              <span>Explorar guia →</span>
+            </a>
+            <a class="pillar-directory-card" href="/conteudos/direito-trabalhista/">
+              <span class="article-category">Direito Trabalhista</span>
+              <strong>Vínculo, jornada, rescisão e saúde no trabalho</strong>
+              <span>Explorar guia →</span>
+            </a>
+            <a class="pillar-directory-card" href="/conteudos/direito-previdenciario/">
+              <span class="article-category">Direito Previdenciário</span>
+              <strong>Benefícios, aposentadorias e pedidos no INSS</strong>
+              <span>Explorar guia →</span>
+            </a>
+          </div>
+        </section>
+
         <div class="contents-tools">
           <div class="search-box"><input id="contentSearch" type="search" placeholder="Buscar por tema ou palavra-chave" aria-label="Buscar conteúdos"></div>
           <div class="filters" aria-label="Filtrar por área">
