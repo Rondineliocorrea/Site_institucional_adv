@@ -38,6 +38,11 @@ src="https://www.facebook.com/tr?id=2144170376171137&ev=PageView&noscript=1"
 
       if (!nome || !telefone || !area || !consentimento) return;
 
+      // Meta Pixel: registra conversão quando o atendimento é efetivamente iniciado.
+      if (typeof fbq === "function") {
+        fbq('track', 'Lead');
+      }
+
       const params = new URLSearchParams(window.location.search);
       const dados = new URLSearchParams({
         nome,
