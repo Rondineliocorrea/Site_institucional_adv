@@ -5,6 +5,7 @@ layout: null
 
 {% capture seo_head %}
   <link rel="canonical" href="https://www.rondineliocorrea.com.br/">
+  <link rel="icon" href="/favicon.ppm" type="image/x-portable-pixmap" sizes="16x16">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
   <meta name="author" content="Rondinelio Correa">
   <meta property="og:type" content="website">
@@ -26,21 +27,29 @@ layout: null
         "inLanguage":"pt-BR"
       },
       {
+        "@type":"Person",
+        "@id":"https://www.rondineliocorrea.com.br/#rondinelio-correa",
+        "name":"Rondinelio Correa",
+        "jobTitle":"Advogado",
+        "identifier":"OAB/MS 26.153",
+        "url":"https://www.rondineliocorrea.com.br/#advogado",
+        "sameAs":["https://instagram.com/rondinelioadv"]
+      },
+      {
         "@type":"LegalService",
         "@id":"https://www.rondineliocorrea.com.br/#legalservice",
         "name":"Rondinelio Correa Advocacia e Consultoria Jurídica",
         "url":"https://www.rondineliocorrea.com.br/",
         "telephone":"+55 67 99611-9098",
         "email":"rondineliojunior.adv@gmail.com",
-        "areaServed":{"@type":"Country","name":"Brasil"},
+        "areaServed":[
+          {"@type":"City","name":"Campo Grande","containedInPlace":{"@type":"State","name":"Mato Grosso do Sul"}},
+          {"@type":"Country","name":"Brasil"}
+        ],
         "serviceType":["Direito do Consumidor","Direito Trabalhista","Direito Previdenciário"],
+        "knowsAbout":["Fraudes bancárias e compras não reconhecidas","Relações de trabalho e reconhecimento de vínculo","Benefícios previdenciários e assistenciais"],
         "sameAs":["https://instagram.com/rondinelioadv"],
-        "founder":{
-          "@type":"Person",
-          "name":"Rondinelio Correa",
-          "jobTitle":"Advogado",
-          "identifier":"OAB/MS 26.153"
-        }
+        "founder":{"@id":"https://www.rondineliocorrea.com.br/#rondinelio-correa"}
       }
     ]
   }
