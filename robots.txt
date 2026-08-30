@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.rondineliocorrea.com.br/sitemap.xml
