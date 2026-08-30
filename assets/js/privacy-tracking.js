@@ -22,8 +22,24 @@
     document.head.appendChild(style);
   }
 
+  function clearMetaCookies() {
+    ['_fbp', '_fbc'].forEach(name => {
+      document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+      document.cookie = `${name}=; Max-Age=0; path=/; domain=.rondineliocorrea.com.br; SameSite=Lax`;
+      document.cookie = `${name}=; Max-Age=0; path=/; domain=www.rondineliocorrea.com.br; SameSite=Lax`;
+    });
+  }
+
+  function revokeMetaConsent() {
+    if (typeof window.fbq === 'function') {
+      window.fbq('consent', 'revoke');
+    }
+    clearMetaCookies();
+  }
+
   function loadMetaPixel() {
     if (window.fbq) {
+      window.fbq('consent', 'grant');
       if (!pageViewSent) {
         window.fbq('track', 'PageView');
         pageViewSent = true;
@@ -41,6 +57,7 @@
     }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
     window.fbq('init', PIXEL_ID);
+    window.fbq('consent', 'grant');
     window.fbq('track', 'PageView');
     pageViewSent = true;
   }
@@ -85,6 +102,7 @@
         setConsent(choice);
         closeBanner();
         if (choice === 'accepted') loadMetaPixel();
+        else revokeMetaConsent();
       });
     });
   }
@@ -97,14 +115,16 @@
   };
 
   window.rcOpenCookiePreferences = () => {
-    try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
     showBanner();
   };
 
   function init() {
     const consent = getConsent();
     if (consent === 'accepted') loadMetaPixel();
-    else if (consent !== 'rejected') showBanner();
+    else {
+      revokeMetaConsent();
+      if (consent !== 'rejected') showBanner();
+    }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
