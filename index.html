@@ -57,6 +57,7 @@
     }
     .header-cta:hover{background:var(--gold);color:#07182c}
     .menu-btn{display:none;background:none;border:0;color:#fff;font-size:28px}
+    .mobile-menu{display:none}
 
     /* HERO */
     .hero {
@@ -609,7 +610,27 @@
       .header-inner{height:76px}
       .brand{font-size:25px}
       .nav,.header-cta{display:none}
-      .menu-btn{display:block}
+      .menu-btn{display:block;position:relative;z-index:22;width:46px;height:46px;padding:0;font-size:31px;line-height:1}
+      .mobile-menu{
+        display:none;position:fixed;inset:76px 0 0;z-index:19;
+        background:rgba(6,24,44,.985);border-top:1px solid rgba(255,255,255,.08);
+        overflow-y:auto;
+      }
+      .mobile-menu.open{display:block}
+      .mobile-menu-inner{padding:34px 17px 42px}
+      .mobile-nav{display:grid}
+      .mobile-nav a{
+        padding:19px 4px;border-bottom:1px solid rgba(255,255,255,.10);
+        color:rgba(255,255,255,.88);font-family:var(--serif);font-size:31px;line-height:1.1;
+      }
+      .mobile-nav a:hover,.mobile-nav a:focus{color:var(--gold-soft)}
+      .mobile-menu-cta{
+        margin-top:28px;width:100%;min-height:56px;border:1px solid var(--gold);
+        background:var(--gold-soft);color:#07182c;font-weight:700;font-size:15px;
+        display:flex;align-items:center;justify-content:center;border-radius:3px;
+      }
+      body.mobile-menu-open{overflow:hidden}
+      body.mobile-menu-open .header{background:var(--navy)}
       .hero{padding-top:76px}
       .hero-grid{grid-template-columns:1fr;min-height:auto;gap:20px;padding-top:64px}
       .hero-copy{padding-bottom:26px}
@@ -956,9 +977,22 @@
         <a href="#contato">Contato</a>
       </nav>
       <a class="header-cta open-modal-link" href="#" data-area="Atendimento geral">Fale com o advogado</a>
-      <button class="menu-btn" aria-label="Abrir menu">☰</button>
+      <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
     </div>
   </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="container mobile-menu-inner">
+      <nav class="mobile-nav" aria-label="Navegação mobile">
+        <a href="#inicio">Início</a>
+        <a href="#advogado">O Advogado</a>
+        <a href="#atuacao">Atuação</a>
+        <a href="#conteudos">Conteúdos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <a class="mobile-menu-cta open-modal-link" href="#" data-area="Atendimento geral">Fale com o advogado</a>
+    </div>
+  </div>
 
   <main>
     <section class="hero" id="inicio">
@@ -1369,6 +1403,42 @@
   </div>
 
   <script>
+    const menuBtn = document.querySelector(".menu-btn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    function closeMobileMenu() {
+      if(!menuBtn || !mobileMenu) return;
+      mobileMenu.classList.remove("open");
+      mobileMenu.setAttribute("aria-hidden", "true");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Abrir menu");
+      menuBtn.textContent = "☰";
+      document.body.classList.remove("mobile-menu-open");
+    }
+
+    if(menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("open");
+        mobileMenu.setAttribute("aria-hidden", String(!isOpen));
+        menuBtn.setAttribute("aria-expanded", String(isOpen));
+        menuBtn.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+        menuBtn.textContent = isOpen ? "×" : "☰";
+        document.body.classList.toggle("mobile-menu-open", isOpen);
+      });
+
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", event => {
+        if(event.key === "Escape" && mobileMenu.classList.contains("open")) closeMobileMenu();
+      });
+
+      window.addEventListener("resize", () => {
+        if(window.innerWidth > 850 && mobileMenu.classList.contains("open")) closeMobileMenu();
+      });
+    }
+
     const WA = "5567996119098";
     const modal = document.getElementById("atendimentoModal");
     const modalClose = document.getElementById("modalClose");
