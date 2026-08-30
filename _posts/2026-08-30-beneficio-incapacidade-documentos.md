@@ -1,6 +1,7 @@
 ---
 layout: article
 title: "Benefício por incapacidade: quais documentos podem ser importantes?"
+seo_title: "Benefício por incapacidade no INSS: documentos importantes"
 description: "Veja quais documentos médicos, pessoais e contributivos podem ser relevantes em um pedido de benefício por incapacidade e por que a qualidade da documentação importa."
 category: "Direito Previdenciário"
 area: "Direito Previdenciário"
