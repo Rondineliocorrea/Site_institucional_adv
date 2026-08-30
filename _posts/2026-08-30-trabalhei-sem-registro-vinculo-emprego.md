@@ -1,6 +1,7 @@
 ---
 layout: article
 title: "Trabalhei sem registro: quando pode existir vínculo de emprego?"
+seo_title: "Trabalho sem registro e vínculo de emprego: entenda"
 description: "Entenda quais elementos são analisados para reconhecer uma relação de emprego e por que a ausência de registro em carteira, sozinha, não resolve a questão."
 category: "Direito Trabalhista"
 area: "Direito Trabalhista"
