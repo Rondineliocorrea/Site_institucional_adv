@@ -3,9 +3,23 @@ layout: null
 ---
 {% capture home %}{% include_relative index_aprovado_atual.html %}{% endcapture %}
 
+{% comment %}Extrai as duas imagens já aprovadas para recursos externos no HTML publicado.{% endcomment %}
+{% assign image_parts = home | split: 'data:image/webp;base64,' %}
+{% assign hero_tail = image_parts[1] %}
+{% assign hero_b64 = hero_tail | split: '"' | first %}
+{% assign about_tail = image_parts[2] %}
+{% assign about_b64 = about_tail | split: '"' | first %}
+{% capture hero_uri %}data:image/webp;base64,{{ hero_b64 }}{% endcapture %}
+{% capture about_uri %}data:image/webp;base64,{{ about_b64 }}{% endcapture %}
+{% assign home = home | replace_first: hero_uri, '/assets/images/rondinelio-hero.svg' %}
+{% assign home = home | replace_first: about_uri, '/assets/images/rondinelio-correa.svg' %}
+{% assign home = home | replace_first: 'src="/assets/images/rondinelio-hero.svg"', 'src="/assets/images/rondinelio-hero.svg" width="1000" height="1000" loading="eager" fetchpriority="high"' %}
+{% assign home = home | replace_first: 'src="/assets/images/rondinelio-correa.svg"', 'src="/assets/images/rondinelio-correa.svg" width="1122" height="1402"' %}
+
 {% capture seo_head %}
   <link rel="canonical" href="https://www.rondineliocorrea.com.br/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="preload" as="image" href="/assets/images/rondinelio-hero.svg" type="image/svg+xml" fetchpriority="high">
   <link rel="stylesheet" href="/assets/css/interactions.css">
   <meta name="author" content="Rondinelio Correa">
   <meta property="og:type" content="website">
