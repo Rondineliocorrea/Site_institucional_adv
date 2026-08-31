@@ -1,0 +1,11 @@
+---
+layout: null
+permalink: /assets/images/rondinelio-correa.svg
+---
+{% capture source %}{% include_relative index_aprovado_atual.html %}{% endcapture %}
+{% assign parts = source | split: 'data:image/webp;base64,' %}
+{% assign tail = parts[2] %}
+{% assign image_data = tail | split: '"' | first %}
+<svg xmlns="http://www.w3.org/2000/svg" width="1122" height="1402" viewBox="0 0 1122 1402" preserveAspectRatio="none">
+  <image width="1122" height="1402" href="data:image/webp;base64,{{ image_data | strip }}" />
+</svg>
