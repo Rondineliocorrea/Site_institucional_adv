@@ -1,0 +1,11 @@
+---
+layout: null
+permalink: /assets/images/rondinelio-hero.svg
+---
+{% capture source %}{% include_relative index_aprovado_atual.html %}{% endcapture %}
+{% assign parts = source | split: 'data:image/webp;base64,' %}
+{% assign tail = parts[1] %}
+{% assign image_data = tail | split: '"' | first %}
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+  <image width="1000" height="1000" href="data:image/webp;base64,{{ image_data | strip }}" />
+</svg>
